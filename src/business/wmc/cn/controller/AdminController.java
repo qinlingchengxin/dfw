@@ -145,7 +145,7 @@ public class AdminController {
             HSSFSheet sheet = wb.getSheetAt(0);
             //画图的顶级管理器，一个sheet只能获取一个（一定要注意这点）
             HSSFPatriarch patriarch = sheet.createDrawingPatriarch();
-            //anchor主要用于设置图片的属性
+            //anchor主要用于设置图片的属性         后面四个值分别是第一个cell的位置row为y，col为x，都从0开始
             HSSFClientAnchor anchor = new HSSFClientAnchor(0, 0, 1023, 255,(short) 19, 0, (short) 20, 1);
             anchor.setAnchorType(3);
             //插入图片
