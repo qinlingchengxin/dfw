@@ -105,14 +105,12 @@ public class AdminController {
     /**
      * 调到指定页
      *
-     * @param request
      * @return
      */
     @RequestMapping(value = "exportReport")
     @ResponseBody
-    public String exportReport(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        response.setContentType("text/html");
-        String fileTmpPath = request.getRealPath("report/userTemplate.xls");
+    public String exportReport(HttpSession session, HttpServletResponse response) throws IOException {
+        String fileTmpPath = session.getServletContext().getRealPath("report/userTemplate.xls");
         String resultFileName = "user_" + System.currentTimeMillis() + ".xls";
         Map<String, Object> jsonObject = new HashMap<String, Object>();
         List<Map<String, Object>> users = adminService.getAllUserInfos();
@@ -124,7 +122,6 @@ public class AdminController {
         /*以下是导出图片到excel中*/
         BufferedImage bufferImg;
         /*以下是导出图片到excel中*/
-
 
 
         //先把读进来的图片放到一个ByteArrayOutputStream中，以便产生ByteArray
@@ -146,7 +143,7 @@ public class AdminController {
             //画图的顶级管理器，一个sheet只能获取一个（一定要注意这点）
             HSSFPatriarch patriarch = sheet.createDrawingPatriarch();
             //anchor主要用于设置图片的属性         后面四个值分别是第一个cell的位置row为y，col为x，都从0开始
-            HSSFClientAnchor anchor = new HSSFClientAnchor(0, 0, 1023, 255,(short) 19, 0, (short) 20, 1);
+            HSSFClientAnchor anchor = new HSSFClientAnchor(0, 0, 1023, 255, (short) 19, 0, (short) 20, 1);
             anchor.setAnchorType(3);
             //插入图片
             patriarch.createPicture(anchor, wb.addPicture(byteArrayOut.toByteArray(), HSSFWorkbook.PICTURE_TYPE_JPEG));
